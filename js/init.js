@@ -318,3 +318,189 @@ document.querySelector('.hero_texts').addEventListener('click', () => {
 });
 
 
+// team member
+const members = [
+    {
+      name: 'Lethean Seourn',
+      role: 'Web Developer',
+      skills: ['web-design', 'javascript', 'vc1', 'oop', 'algorithm'],
+      img: 'img/about/lethean.jpg'
+    },
+    {
+      name: 'Panha Nhean',
+      role: 'web Developer',
+      skills: ['oop'],
+      img: 'img/about/panha.jpg'
+    },
+    {
+      name: 'Rochom Eub',
+      role: 'VC1 Developer',
+      skills: ['vc1'],
+      img: 'img/about/eubjpg.jpg'
+    },
+    {
+      name: 'Yong Sy Din',
+      role: 'OOP Specialist',
+      skills: ['vc1'],
+      img: 'img/about/yongsy.jpg'
+    },
+    {
+      name: 'Piseth Un',
+      role: 'Fullstack Developer',
+      skills: ['web-design', 'vc1'],
+      img: 'img/about/piseth.jpg'
+    },
+    {
+      name: 'Solin Neath',
+      role: 'Quality Code',
+      skills: ['algorithm', 'vc1'],
+      img: 'img/about/solin.jpg'
+    },
+    {
+      name: 'Mesa Nat',
+      role: 'Web Developer',
+      skills: ['algorithm', 'oop'],
+      img: 'img/about/mesa.jpg'
+    },
+    {
+      name: 'Lynak Khat',
+      role: 'Team Leader',
+      skills: ['javascript'],
+      img: 'img/about/lynak.jpg'
+    },
+    {
+      name: 'Nil Rothana Tep',
+      role: 'VC1 & Algorithm Expert',
+      skills: ['javascript', ],
+      img: 'img/about/rohtana.jpg'
+    },
+     {
+      name: 'Michael Brown',
+      role: 'Qulity code',
+      skills: ['web design'],
+      img: 'img/about/katrok.jpg'
+    },
+    // {
+    //   name: 'Jennifer Lee',
+    //   role: 'Web Design Lead',
+    //   skills: ['web-design'],
+    //   img: 'img/about/13.jpg'
+    // },
+    // {
+    //   name: 'David Wilson',
+    //   role: 'JavaScript Architect',
+    //   skills: ['javascript'],
+    //   img: 'img/about/14.jpg'
+    // },
+    // {
+    //   name: 'Lisa Chen',
+    //   role: 'VC1 Specialist',
+    //   skills: ['vc1'],
+    //   img: 'img/about/15.jpg'
+    // },
+    // {
+    //   name: 'Robert Taylor',
+    //   role: 'OOP & Web Design',
+    //   skills: ['oop', 'web-design'],
+    //   img: 'img/about/16.jpg'
+    // },
+    // {
+    //   name: 'Amanda Clark',
+    //   role: 'Algorithm & VC1',
+    //   skills: ['algorithm', 'vc1'],
+    //   img: 'img/about/17.jpg'
+    // },
+    // {
+    //   name: 'Daniel Kim',
+    //   role: 'Fullstack Developer',
+    //   skills: ['javascript', 'vc1', 'web-design'],
+    //   img: 'img/about/18.jpg'
+    // },
+    // {
+    //   name: 'Olivia Martinez',
+    //   role: 'Senior Algorithm Engineer',
+    //   skills: ['algorithm', 'oop'],
+    //   img: 'img/about/19.jpg'
+    // }
+  ];
+
+  const teamList = document.getElementById('team-list');
+  const buttons = document.querySelectorAll('.filter-btn');
+
+  function renderMembers(filterSkill) {
+    teamList.innerHTML = '';
+    
+    const filtered = filterSkill === 'all' 
+      ? members 
+      : members.filter(m => m.skills.includes(filterSkill));
+    
+    if (filtered.length === 0) {
+      teamList.innerHTML = `
+        <li>
+          <div class="inner">
+            <div class="texts" style="text-align: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ea3509" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <h3>No Members Found</h3>
+              <span>We couldn't find any team members with the selected skill.</span>
+            </div>
+          </div>
+        </li>
+      `;
+      return;
+    }
+    
+    filtered.forEach(member => {
+      const item = `
+        <li>
+          <div class="inner">
+            <div class="image">
+              <img src="${member.img}" alt="${member.name}" loading="lazy" />
+              <div class="main" style="background-image: url(${member.img});"></div>
+            </div>
+            <div class="texts">
+              <h3>${member.name}</h3>
+              <span>${member.role}</span>
+            </div>
+          </div>
+        </li>
+      `;
+      teamList.insertAdjacentHTML('beforeend', item);
+    });
+  }
+
+  function formatSkillName(skill) {
+    const skillNames = {
+      'web-design': 'Web Design',
+      'javascript': 'JavaScript',
+      'vc1': 'VC1',
+      'oop': 'OOP',
+      'algorithm': 'Algorithm'
+    };
+    return skillNames[skill] || skill;
+  }
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      buttons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      const skill = button.getAttribute('data-skill');
+      renderMembers(skill);
+    });
+  });
+
+  // Show all by default
+  renderMembers('all');
+  
+  // Add animation on load
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      teamList.parentElement.classList.add('load');
+    }, 100);
+  });
+
+// team member end
+
