@@ -423,12 +423,14 @@ function renderMembers(skill) {
 
     // Special roles for Lethean based on skill
     if (member.name === "Lethean Seourn") {
-      if (skill === "web-design" || skill === "algorithm") {
+      if (skill === "vc1") {
+        displayRole = "Product Owner";
+      } else if (skill === "web-design" || skill === "algorithm") {
         displayRole = "Team Leader";
       } else if (skill === "oop" || skill === "javascript") {
         displayRole = "Git Manager";
       } else {
-        displayRole = "Product Owner";
+        displayRole = "FullStack Developer";
       }
     }
 
@@ -446,8 +448,8 @@ function renderMembers(skill) {
           </div>
         </li>
       `;
-    teamList.insertAdjacentHTML("beforeend", html);
-  });
+  teamList.insertAdjacentHTML("beforeend", html);
+});
 }
 
 buttons.forEach((button) => {
@@ -470,3 +472,75 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // team member end
+
+function perker_anchor() {
+  jQuery(".perker_topbar .menu ul li a, .perker_topbar .dropdown .main ul li a")
+    .off()
+    .on("click", function (e) {
+      var element = jQuery(this);
+      var url = element.attr("href");
+
+      // Only handle hash links
+      if (url && url.charAt(0) === '#') {
+        e.preventDefault();
+        var target = jQuery(url);
+        if (target.length) {
+          jQuery('html, body').animate({
+            scrollTop: target.offset().top - 85
+          }, 1000);
+        }
+      }
+    });
+}
+
+
+// qr payment
+  const qrData = {
+    "Basic": {
+      image: "img/about/qr.jpg",
+      title: "Pay for Basic Plan",
+      description: "Scan to pay $22/month"
+    },
+    "Plus": {
+      image: "img/qr-plus.png",
+      title: "Pay for Plus Plan",
+      description: "Scan to pay $33/month"
+    },
+    "Pro": {
+      image: "img/qr-pro.png",
+      title: "Pay for Pro Plan",
+      description: "Scan to pay $55/month"
+    }
+  };
+
+  document.querySelectorAll(".select-btn").forEach(button => {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const plan = this.closest(".in").querySelector(".title").textContent;
+      const modal = document.getElementById("qrModal");
+      const qrImage = document.getElementById("qrImage");
+      const qrTitle = document.getElementById("qrTitle");
+      const qrDesc = document.getElementById("qrDescription");
+
+      if (qrData[plan]) {
+        qrImage.src = qrData[plan].image;
+        qrTitle.textContent = qrData[plan].title;
+        qrDesc.textContent = qrData[plan].description;
+        modal.style.display = "block";
+      }
+    });
+  });
+
+  document.querySelector(".qr-close").addEventListener("click", () => {
+    document.getElementById("qrModal").style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    const modal = document.getElementById("qrModal");
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  
